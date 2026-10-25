@@ -1,0 +1,19 @@
+assign (resi 164 and segid A)
+(
+       (resi 1 and segid B)
+) 2.0 2.0 0.0
+
+assign (resi 170 and segid A)
+(
+       (resi 1 and segid B)
+) 2.0 2.0 0.0
+
+assign (resi 184 and segid A)
+(
+       (resi 1 and segid B)
+) 2.0 2.0 0.0
+
+assign (resi 243 and segid A)
+(
+       (resi 1 and segid B)
+) 2.0 2.0 0.0

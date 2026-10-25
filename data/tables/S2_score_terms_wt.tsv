@@ -1,0 +1,17 @@
+# Table S2. HADDOCK score partition against the wild-type receptor.
+# elec_contribution is 0.2 x elec, the emref weight. Percentages are of |score|.
+# The median row takes the median of each term separately, so sum_pct is not
+# exactly 100 (Figure 2A carries the same note).
+ligand	run	iniseed	score	vdw	elec_contribution_0.2x	desolv	elec_pct	vdw_pct	desolv_pct	sum_pct
+MMMA	MMAREP_MMT_blind	917	-19.161	-14.831	-2.492	-1.837	13.0	77.4	9.6	100.0
+MMMA	MMAREP_MMT_blind_i20000	20000	-19.484	-15.887	-2.413	-1.184	12.4	81.5	6.1	100.0
+MMMA	MMAREP_MMT_blind_i40000	40000	-19.543	-15.411	-2.330	-1.803	11.9	78.9	9.2	100.0
+MMMA	MMAREP_MMT_blind_i60000	60000	-19.367	-14.758	-2.672	-1.937	13.8	76.2	10.0	100.0
+MMMA	MMAREP_MMT_blind_i80000	80000	-19.343	-15.709	-2.445	-1.189	12.6	81.2	6.1	100.0
+MMMA	(median of 5)		-19.367	-15.411	-2.445	-1.803	12.6	79.6	9.3	101.5
+compound 48/80	Y3B	917	-113.686	-48.446	-62.691	-2.548	55.1	42.6	2.2	100.0
+compound 48/80	Y3B_i20000	20000	-112.262	-48.047	-61.722	-2.493	55.0	42.8	2.2	100.0
+compound 48/80	Y3B_i40000	40000	-115.450	-50.421	-62.356	-2.673	54.0	43.7	2.3	100.0
+compound 48/80	Y3B_i60000	60000	-113.785	-50.404	-61.110	-2.272	53.7	44.3	2.0	100.0
+compound 48/80	Y3B_i80000	80000	-115.805	-51.676	-61.507	-2.621	53.1	44.6	2.3	100.0
+compound 48/80	(median of 5)		-113.785	-50.404	-61.722	-2.548	54.2	44.3	2.2	100.8

@@ -1,0 +1,12 @@
+# Table S8. Ligand RMSD after Kabsch superposition on the common receptor (chain A CA atoms).
+# Model 1 of each cluster. RMSD is symmetry-unaware.
+# Cluster files are named by rank; the cluster_id column shows that the charge model
+# reorders the clusters without moving the pose.
+# MMT_chainB: rank 1 = cluster_id 1 (score -27.787); rank 2 = cluster_id 3 (score -26.290); rank 3 = cluster_id 2 (score -22.499); rank 4 = cluster_id 4 (score -19.876)
+# MMG_chainB: rank 1 = cluster_id 2 (score -22.747); rank 2 = cluster_id 4 (score -22.480); rank 3 = cluster_id 1 (score -22.335); rank 4 = cluster_id 3 (score -18.170)
+comparison	run_A	A_cluster_rank	A_cluster_id	A_cluster_score	run_B	B_cluster_rank	B_cluster_id	B_cluster_score	n_CA_superposed	receptor_fit_rmsd_A	n_ligand_heavy_atoms	ligand_rmsd_A	ligand_centroid_shift_A	note
+blind vs restrained, both top-ranked	MMT_blind	1	1	-19.235	MMT_chainB	1	1	-27.787	271	0.370	7	1.021	0.854	Letter, paragraph 2: 'agreed to 1.02 A with a restrained docking'
+AM1-BCC top vs Gasteiger rank 1	MMT_chainB	1	1	-27.787	MMG_chainB	1	2	-22.747	271	0.387	7	1.644	1.453	the two best-scoring poses are NOT the same pose
+AM1-BCC top vs Gasteiger rank 2	MMT_chainB	1	1	-27.787	MMG_chainB	2	4	-22.480	271	0.180	7	2.637	1.956	
+AM1-BCC top vs Gasteiger rank 3	MMT_chainB	1	1	-27.787	MMG_chainB	3	1	-22.335	271	0.296	7	0.644	0.566	Letter, paragraph 2: 'an equivalent pose 0.64 A away, though it fell from first to third'
+AM1-BCC top vs Gasteiger rank 4	MMT_chainB	1	1	-27.787	MMG_chainB	4	3	-18.170	271	0.149	7	2.895	2.482	

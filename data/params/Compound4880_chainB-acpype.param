@@ -1,0 +1,83 @@
+Remarks Compound4880_protonated_CNS.par created by acpype (v: 2023.10.27) on Tue Feb 10 14:33:30 2026
+
+set echo=false end
+
+{ Bonds: atomType1 atomType2 kb r0 }
+BOND   ny_   hn_    430.8   1.0339
+BOND   ca_   ha_    360.7   1.0860
+BOND   c3_   hc_    345.2   1.0962
+BOND   c3_   hx_    352.9   1.0911
+BOND   c3_   h1_    344.2   1.0969
+BOND   os_   ca_    343.3   1.3688
+BOND   os_   c3_    282.3   1.4273
+BOND   ny_   c3_    222.4   1.5070
+BOND   ca_   ca_    354.2   1.3986
+BOND   ca_   c3_    243.9   1.5147
+BOND   c3_   c3_    228.9   1.5354
+
+{ Angles: aType1 aType2 aType3 kt t0 }
+ANGLe   os_   c3_   h1_     56.2   110.34
+ANGLe   ny_   c3_   hx_     47.0   108.32
+ANGLe   ca_   ca_   ha_     44.9   119.88
+ANGLe   ca_   c3_   hc_     43.6   110.63
+ANGLe   c3_   c3_   hx_     43.2   110.28
+ANGLe   c3_   ny_   hn_     54.7   109.50
+ANGLe   c3_   c3_   hc_     43.3   109.68
+ANGLe   hn_   ny_   hn_     47.1   106.84
+ANGLe   hc_   c3_   hc_     35.8   107.73
+ANGLe   hx_   c3_   hx_     35.6   109.79
+ANGLe   h1_   c3_   h1_     35.6   108.55
+ANGLe   os_   ca_   ca_     79.0   119.11
+ANGLe   ny_   c3_   c3_     64.4   111.63
+ANGLe   ca_   ca_   ca_     63.7   120.02
+ANGLe   ca_   c3_   ca_     60.8   112.31
+ANGLe   c3_   ca_   ca_     60.7   120.83
+ANGLe   ca_   c3_   c3_     60.3   112.42
+ANGLe   ca_   os_   c3_     88.3   118.39
+ANGLe   c3_   ny_   c3_     73.9   117.12
+
+{ Proper Dihedrals: aType1 aType2 aType3 aType4 kt period phase }
+DIHEdral   ca_   ca_   ca_   ha_           3.625    2   180.00
+DIHEdral   ny_   c3_   c3_   hc_           0.156    3     0.00
+DIHEdral   c3_   ca_   ca_   ca_           3.625    2   180.00
+DIHEdral   ha_   ca_   ca_   ha_           3.625    2   180.00
+DIHEdral   c3_   c3_   ny_   hn_           0.156    3     0.00
+DIHEdral   ny_   c3_   c3_   ca_           0.156    3     0.00
+DIHEdral   os_   ca_   ca_   ha_           3.625    2   180.00
+DIHEdral   ca_   ca_   c3_   ca_           0.000    2   180.00
+DIHEdral   hc_   c3_   c3_   hx_           0.156    3     0.00
+DIHEdral   ca_   c3_   c3_   hx_           0.156    3     0.00
+DIHEdral   c3_   ny_   c3_   hx_           0.156    3     0.00
+DIHEdral   ca_   ca_   ca_   ca_           3.625    2   180.00
+DIHEdral   ca_   ca_   os_   c3_           1.660    2   180.00
+DIHEdral   os_   ca_   ca_   ca_           3.625    2   180.00
+DIHEdral   ca_   os_   c3_   h1_           0.383    3     0.00
+DIHEdral   ca_   ca_   c3_   hc_           0.000    0     0.00
+DIHEdral   ca_   c3_   ca_   ca_           0.000    2   180.00
+DIHEdral   ca_   ca_   c3_   c3_           0.240    2   180.00
+DIHEdral   c3_   ca_   ca_   ha_           3.625    2   180.00
+DIHEdral   c3_   c3_   ny_   c3_           0.156    3     0.00
+DIHEdral   ca_   ca_   ca_   c3_           3.625    2   180.00
+DIHEdral   os_   ca_   ca_   c3_           3.625    2   180.00
+DIHEdral   hn_   ny_   c3_   hx_           0.109    3     0.00
+DIHEdral   c3_   os_   ca_   ca_           1.660    2   180.00
+
+{ Improper Dihedrals: aType1 aType2 aType3 aType4 kt period phase }
+IMPRoper   os_   ca_   ca_   ca_           1.1    2   180.00
+IMPRoper   c3_   ca_   ca_   ca_           1.1    2   180.00
+IMPRoper   ca_   ca_   ca_   os_           1.1    2   180.00
+IMPRoper   ca_   ca_   ca_   ha_           1.1    2   180.00
+IMPRoper   ca_   ca_   ca_   c3_           1.1    2   180.00
+
+{ Nonbonded: Type Emin sigma; (1-4): Emin/2 sigma }
+NONBonded   os_    0.072600    3.156098    0.036300    3.156098
+NONBonded   ny_    1.695900    2.677685    0.847950    2.677685
+NONBonded   ca_    0.098800    3.315212    0.049400    3.315212
+NONBonded   c3_    0.107800    3.397710    0.053900    3.397710
+NONBonded   hn_    0.010000    1.106496    0.005000    1.106496
+NONBonded   ha_    0.016100    2.625479    0.008050    2.625479
+NONBonded   hc_    0.020800    2.600177    0.010400    2.600177
+NONBonded   hx_    0.020800    1.887458    0.010400    1.887458
+NONBonded   h1_    0.020800    2.421997    0.010400    2.421997
+
+set echo=true end

@@ -1,0 +1,24 @@
+# Table S4. Receptor residues within 4.0 A of a ligand heavy atom,
+# counted over the 20 poses of each ligand (rank-1 cluster, 4 models x 5 seeds).
+# A residue counts as contacted if any receptor atom is within the cutoff.
+residue_number	residue_name	poses_contacting_MMMA_of_20	poses_contacting_C4880_of_20	category
+20	GLN	0	17	compound 48/80 only
+22	LEU	0	20	compound 48/80 only
+25	LEU	0	20	compound 48/80 only
+164	GLU	14	20	both
+168	CYS	20	20	both
+169	GLY	0	2	compound 48/80 only
+170	PHE	20	20	both
+176	ASP	0	16	compound 48/80 only
+177	SER	0	20	compound 48/80 only
+180	CYS	0	17	compound 48/80 only
+184	ASP	20	20	both
+243	TRP	20	20	both
+244	PHE	15	20	both
+247	LEU	19	20	both
+248	TRP	20	20	both
+251	LYS	0	11	compound 48/80 only
+252	ASP	0	19	compound 48/80 only
+253	SER	0	20	compound 48/80 only
+254	ASP	0	20	compound 48/80 only
+257	PHE	0	12	compound 48/80 only

@@ -1,0 +1,107 @@
+Remarks MMG_CNS.top created by acpype (v: 2023.10.27) on Sun Sep  6 20:59:27 2026
+
+set echo=false end
+
+autogenerate angles=True dihedrals=True end
+
+{ atomType  mass }
+MASS c3_     12.010
+MASS ce_     12.010
+MASS c2_     12.010
+MASS c_      12.010
+MASS o_      16.000
+MASS os_     16.000
+MASS hc_      1.008
+MASS ha_      1.008
+MASS h1_      1.008
+
+RESIdue MMG
+
+GROUP
+
+{ atomName  atomType  Charge }
+ATOM C     TYPE= c3_   CHARGE=  -0.0343 END
+ATOM C1    TYPE= ce_   CHARGE=   0.0143 END
+ATOM C2    TYPE= c2_   CHARGE=  -0.0900 END
+ATOM C3    TYPE= c_    CHARGE=   0.2874 END
+ATOM O     TYPE= o_    CHARGE=  -0.2611 END
+ATOM O1    TYPE= os_   CHARGE=  -0.3158 END
+ATOM C4    TYPE= c3_   CHARGE=   0.0456 END
+ATOM H     TYPE= hc_   CHARGE=   0.0282 END
+ATOM H1    TYPE= hc_   CHARGE=   0.0282 END
+ATOM H2    TYPE= hc_   CHARGE=   0.0282 END
+ATOM H3    TYPE= ha_   CHARGE=   0.0543 END
+ATOM H4    TYPE= ha_   CHARGE=   0.0543 END
+ATOM H5    TYPE= h1_   CHARGE=   0.0537 END
+ATOM H6    TYPE= h1_   CHARGE=   0.0537 END
+ATOM H7    TYPE= h1_   CHARGE=   0.0537 END
+
+{ Bonds: atomName1  atomName2 }
+BOND C     H    
+BOND C     H1   
+BOND C     H2   
+BOND C2    H3   
+BOND C2    H4   
+BOND C4    H5   
+BOND C4    H6   
+BOND C4    H7   
+BOND C     C1   
+BOND C1    C2   
+BOND C1    C3   
+BOND C3    O    
+BOND C3    O1   
+BOND O1    C4   
+
+{ Angles: atomName1 atomName2 atomName3}
+ANGLe C1    C     H    
+ANGLe C1    C     H1   
+ANGLe C1    C     H2   
+ANGLe C1    C2    H3   
+ANGLe C1    C2    H4   
+ANGLe O1    C4    H5   
+ANGLe O1    C4    H6   
+ANGLe O1    C4    H7   
+ANGLe H     C     H1   
+ANGLe H     C     H2   
+ANGLe H1    C     H2   
+ANGLe H3    C2    H4   
+ANGLe H5    C4    H6   
+ANGLe H5    C4    H7   
+ANGLe H6    C4    H7   
+ANGLe C     C1    C2   
+ANGLe C     C1    C3   
+ANGLe C1    C3    O    
+ANGLe C1    C3    O1   
+ANGLe C2    C1    C3   
+ANGLe C3    O1    C4   
+ANGLe O     C3    O1   
+
+{ Proper Dihedrals: name1 name2 name3 name4 }
+DIHEdral C     C1    C2    H3   
+DIHEdral C     C1    C2    H4   
+DIHEdral H     C     C1    C2   
+DIHEdral H1    C     C1    C2   
+DIHEdral H2    C     C1    C2   
+DIHEdral H     C     C1    C3   
+DIHEdral H1    C     C1    C3   
+DIHEdral H2    C     C1    C3   
+DIHEdral C3    C1    C2    H3   
+DIHEdral C3    C1    C2    H4   
+DIHEdral C3    O1    C4    H5   
+DIHEdral C3    O1    C4    H6   
+DIHEdral C3    O1    C4    H7   
+DIHEdral C     C1    C3    O    
+DIHEdral C     C1    C3    O1   
+DIHEdral C1    C3    O1    C4   
+DIHEdral C2    C1    C3    O    
+DIHEdral C2    C1    C3    O1   
+DIHEdral O     C3    O1    C4   
+
+{ Improper Dihedrals: aName1 aName2 aName3 aName4 }
+IMPRoper C1    H3    C2    H4   
+IMPRoper C     C1    C2    C3   
+IMPRoper C1    O     C3    O1   
+
+END {RESIdue MMG}
+
+set echo=true end

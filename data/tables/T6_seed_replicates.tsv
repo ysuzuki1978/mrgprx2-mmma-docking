@@ -1,0 +1,11 @@
+ligand	run	iniseed	score	vdw	elec	top_cluster_population	models_clustered
+MMA	MMT_blind	default	-19.235	-15.664	-11.887	379	397
+MMA	MMT_blind_seed1000	1000	-19.235	-15.664	-11.887	382	397
+MMA	MMT_blind_seed2000	2000	-19.235	-15.664	-11.887	382	394
+MMA	MMT_blind_seed3000	3000	-19.229	-15.632	-11.316	373	398
+MMA	SUMMARY		mean=-19.233	sd=0.0030	range=0.0060	n=4	
+C48/80	Compound4880_blind	default	-111.412	-48.389	-299.346	389	400
+C48/80	Compound4880_blind_seed1000	1000	-111.412	-48.389	-299.346	389	400
+C48/80	Compound4880_blind_seed2000	2000	-111.602	-48.719	-300.930	389	400
+C48/80	Compound4880_blind_seed3000	3000	-110.303	-47.480	-301.104	389	400
+C48/80	SUMMARY		mean=-111.182	sd=0.5930	range=1.2990	n=4	

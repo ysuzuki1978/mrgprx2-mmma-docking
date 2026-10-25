@@ -1,0 +1,22 @@
+{
+  "title": "Docking and D184 substitution data for: Two routes into one pocket — compound 48/80 engages MRGPRX2 through charge and monomethyl methacrylate through van der Waals contact",
+  "upload_type": "dataset",
+  "description": "<p>HADDOCK3 docking runs, analysis code and Supplementary Tables S1-S9 supporting the Letter. Contains every run the Letter cites: 18 conditions x 5 replicate seeds for the D184 substitution series, plus the unrestrained replicates, the restrained reference run, its Gasteiger-charge counterpart and an antagonist control.</p><p>The archive regenerates its own numbers: running the four generator scripts rebuilds all nine Supplementary Tables byte for byte, and <code>scripts/verify.py</code> checks every value quoted in the Letter against them.</p><p>See README.md for the layout and the regeneration commands, and protocol/ for the protocol written before the runs were submitted (including a correction to section 16).</p>",
+  "creators": [
+    {
+      "name": "Suzuki, Yasuyuki",
+      "affiliation": "Ehime University"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "keywords": [
+    "MRGPRX2",
+    "molecular docking",
+    "HADDOCK3",
+    "methyl methacrylate",
+    "compound 48/80",
+    "bone cement implantation syndrome",
+    "mast cell"
+  ]
+}

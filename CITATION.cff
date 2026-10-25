@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: If you use this dataset, please cite it using these metadata.
+title: >-
+  Docking and D184 substitution data for: Two routes into one pocket — compound 48/80 engages MRGPRX2 through charge and monomethyl methacrylate through van der Waals contact
+type: dataset
+authors:
+  - family-names: Suzuki
+    given-names: Yasuyuki
+license: CC-BY-4.0
+keywords:
+  - MRGPRX2
+  - molecular docking
+  - HADDOCK3
+  - methyl methacrylate
+  - compound 48/80

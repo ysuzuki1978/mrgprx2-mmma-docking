@@ -1,0 +1,61 @@
+Remarks MMT_CNS.par created by acpype (v: 2023.10.27) on Sun Sep  6 19:53:45 2026
+
+set echo=false end
+
+{ Bonds: atomType1 atomType2 kb r0 }
+BOND   c3_   hc_    345.2   1.0962
+BOND   c2_   ha_    357.3   1.0882
+BOND   c3_   h1_    344.2   1.0969
+BOND   c3_   ce_    246.8   1.5109
+BOND   ce_   c2_    424.3   1.3457
+BOND   ce_    c_    267.8   1.4848
+BOND    c_    o_    590.6   1.2190
+BOND    c_   os_    351.3   1.3621
+BOND   os_   c3_    282.3   1.4273
+
+{ Angles: aType1 aType2 aType3 kt t0 }
+ANGLe   ce_   c3_   hc_     43.7   110.88
+ANGLe   ce_   c2_   ha_     46.1   120.49
+ANGLe   os_   c3_   h1_     56.2   110.34
+ANGLe   hc_   c3_   hc_     35.8   107.73
+ANGLe   ha_   c2_   ha_     34.7   116.66
+ANGLe   h1_   c3_   h1_     35.6   108.55
+ANGLe   c3_   ce_   c2_     61.0   123.65
+ANGLe   c3_   ce_    c_     59.9   118.09
+ANGLe   ce_    c_    o_     78.0   123.24
+ANGLe   ce_    c_   os_     79.4   110.55
+ANGLe   c2_   ce_    c_     62.1   122.00
+ANGLe    c_   os_   c3_     89.4   115.82
+ANGLe    o_    c_   os_    101.3   123.20
+
+{ Proper Dihedrals: aType1 aType2 aType3 aType4 kt period phase }
+DIHEdral   hc_   c3_   ce_   c2_           0.260    3   180.00
+DIHEdral   c3_   ce_    c_    o_           2.175    2   180.00
+DIHEdral   hc_   c3_   ce_    c_           0.260    3   180.00
+DIHEdral    c_   ce_   c2_   ha_           6.650    2   180.00
+DIHEdral   c3_   ce_   c2_   ha_           6.650    2   180.00
+DIHEdral   c2_   ce_    c_   os_           2.175    2   180.00
+DIHEdral   ce_    c_   os_   c3_           2.700    2   180.00
+DIHEdral   c2_   ce_    c_    o_           2.175    2   180.00
+DIHEdral    c_   os_   c3_   h1_           0.383    3     0.00
+DIHEdral   c3_   ce_    c_   os_           2.175    2   180.00
+DIHEdral    o_    c_   os_   c3_  MULT 2   1.400    1   180.00
+                                           2.700    2   180.00
+
+{ Improper Dihedrals: aType1 aType2 aType3 aType4 kt period phase }
+IMPRoper   ce_   ha_   c2_   ha_           1.1    2   180.00
+IMPRoper   c3_   ce_   c2_    c_           1.1    2   180.00
+IMPRoper   ce_    o_    c_   os_           1.1    2   180.00
+
+{ Nonbonded: Type Emin sigma; (1-4): Emin/2 sigma }
+NONBonded   c3_    0.107800    3.397710    0.053900    3.397710
+NONBonded   ce_    0.098800    3.315212    0.049400    3.315212
+NONBonded   c2_    0.098800    3.315212    0.049400    3.315212
+NONBonded    c_    0.098800    3.315212    0.049400    3.315212
+NONBonded    o_    0.146300    3.048121    0.073150    3.048121
+NONBonded   os_    0.072600    3.156098    0.036300    3.156098
+NONBonded   hc_    0.020800    2.600177    0.010400    2.600177
+NONBonded   ha_    0.016100    2.625479    0.008050    2.625479
+NONBonded   h1_    0.020800    2.421997    0.010400    2.421997
+
+set echo=true end

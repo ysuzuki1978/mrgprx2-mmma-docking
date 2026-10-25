@@ -1,0 +1,18 @@
+########################################
+# `caprieval` cluster-based analysis
+#
+# > sortby_key=score
+# > sort_ascending=True
+# > clt_threshold=4
+#
+# NOTE: if under_eval=yes, it means that there were less models in a cluster than
+#    clt_threshold, thus these values were under evaluated.
+#   You might need to tweak the value of clt_threshold or change some parameters
+#    in `clustfcc` depending on your analysis.
+#
+########################################
+cluster_rank	cluster_id	n	under_eval	score	score_std	irmsd	irmsd_std	fnat	fnat_std	lrmsd	lrmsd_std	dockq	dockq_std	ilrmsd	ilrmsd_std	rmsd	rmsd_std	air	air_std	bsa	bsa_std	desolv	desolv_std	elec	elec_std	total	total_std	vdw	vdw_std	caprieval_rank
+1	1	4	-	-17.178	0.351	0.565	0.333	0.929	0.071	1.349	1.135	0.913	0.052	1.347	1.131	0.226	0.132	0.000	0.000	297.035	16.627	-3.244	0.119	-2.747	0.266	-16.132	0.294	-13.384	0.274	1
+2	4	4	-	-16.569	0.038	3.245	0.106	0.000	0.000	20.520	0.678	0.108	0.006	20.483	0.678	1.236	0.055	0.000	0.000	400.830	6.927	1.109	0.549	-4.443	3.519	-21.232	3.392	-16.790	0.131	2
+3	3	4	-	-14.957	0.560	0.586	0.175	0.679	0.062	2.084	0.741	0.827	0.029	2.059	0.755	0.253	0.053	0.000	0.000	275.375	16.152	-3.768	0.354	-1.975	0.346	-12.769	0.068	-10.795	0.279	3
+4	2	4	-	-12.781	0.150	0.731	0.101	0.214	0.071	2.909	0.358	0.639	0.039	2.928	0.345	0.284	0.030	0.000	0.000	249.279	4.577	-3.875	0.430	-0.872	0.440	-9.603	0.764	-8.731	0.326	4
