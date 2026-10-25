@@ -5,7 +5,23 @@
   "creators": [
     {
       "name": "Suzuki, Yasuyuki",
-      "affiliation": "Ehime University"
+      "affiliation": "Department of Anaesthesiology, Saiseikai Matsuyama Hospital, Matsuyama City, Japan"
+    },
+    {
+      "name": "Liu, Shuang",
+      "affiliation": "Department of Pharmacology, Ehime University Graduate School of Medicine, Toon City, Japan"
+    },
+    {
+      "name": "Horiuchi, Tatsuo",
+      "affiliation": "Department of Anaesthesiology, Gunma University Graduate School of Medicine, Maebashi City, Japan"
+    },
+    {
+      "name": "Takemasa, Erika",
+      "affiliation": "Department of Pharmacology, Ehime University Graduate School of Medicine, Toon City, Japan"
+    },
+    {
+      "name": "Mogi, Masaki",
+      "affiliation": "Department of Pharmacology, Ehime University Graduate School of Medicine, Toon City, Japan"
     }
   ],
   "license": "cc-by-4.0",

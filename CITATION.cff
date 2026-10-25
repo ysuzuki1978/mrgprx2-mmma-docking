@@ -6,6 +6,24 @@ type: dataset
 authors:
   - family-names: Suzuki
     given-names: Yasuyuki
+    affiliation: >-
+      Department of Anaesthesiology, Saiseikai Matsuyama Hospital, Matsuyama City, Japan
+  - family-names: Liu
+    given-names: Shuang
+    affiliation: >-
+      Department of Pharmacology, Ehime University Graduate School of Medicine, Toon City, Japan
+  - family-names: Horiuchi
+    given-names: Tatsuo
+    affiliation: >-
+      Department of Anaesthesiology, Gunma University Graduate School of Medicine, Maebashi City, Japan
+  - family-names: Takemasa
+    given-names: Erika
+    affiliation: >-
+      Department of Pharmacology, Ehime University Graduate School of Medicine, Toon City, Japan
+  - family-names: Mogi
+    given-names: Masaki
+    affiliation: >-
+      Department of Pharmacology, Ehime University Graduate School of Medicine, Toon City, Japan
 license: CC-BY-4.0
 keywords:
   - MRGPRX2
