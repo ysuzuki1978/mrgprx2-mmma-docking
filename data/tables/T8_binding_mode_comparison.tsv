@@ -1,0 +1,14 @@
+measure	value
+MMA_atoms_within_2A_of_C4880_volume_pct	100
+MMA_atom_to_C4880_cloud_mean_A	0.79
+MMA_atom_to_C4880_cloud_max_A	1.53
+centroid_separation_A	5.19
+contacts_MMA_only	(none)
+contacts_shared	CYS168;PHE170;ASP184;TRP243;TRP248
+contacts_C4880_only	GLN20;LEU22;LEU25;GLU164;ASP176;SER177;CYS180;PHE244;LEU247;LYS251;ASP252;SER253;ASP254;PHE257
+MMA_total_contact_pairs	60.5
+MMA_aromatic_pct	68.2
+MMA_acidic_pct	14.9
+C4880_total_contact_pairs	140.5
+C4880_aromatic_pct	35.6
+C4880_acidic_pct	15.3
