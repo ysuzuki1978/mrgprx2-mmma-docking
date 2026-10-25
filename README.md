@@ -57,6 +57,11 @@ they are the files that produced the runs.
 
 `MANIFEST.sha256` lists a checksum for every file.
 
+## Funding
+
+Japan Society for the Promotion of Science (JSPS), Grant-in-Aid for Scientific Research,
+KAKENHI grant number 21K16549.
+
 ## Licence
 
 CC BY 4.0. See `LICENSE`.
