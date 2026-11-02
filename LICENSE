@@ -2,6 +2,12 @@ Creative Commons Attribution 4.0 International (CC BY 4.0)
 
 Copyright (c) 2026 the authors listed in CITATION.cff
 
+This licence covers the DATA and DOCUMENTATION in this repository: the
+coordinates under data/runs/, the tables under data/tables/, the restraint
+and parameter files, the cached inputs, the protocol documents and the
+README. The analysis scripts under scripts/ are licensed separately under
+the MIT Licence; see LICENSE-CODE.
+
 You are free to share and adapt this material for any purpose, including
 commercially, provided you give appropriate credit, provide a link to the
 licence, and indicate if changes were made.

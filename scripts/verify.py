@@ -36,6 +36,72 @@ def g1(run,col):
         if r["run"]==run: return float(r[col])
     raise KeyError((run,col))
 
+def s6_ok():
+    """Table S6 の MMMA 20 ポーズのうち、弱い C-H...O の基準を満たす数。"""
+    n = 0
+    for r in load("S6_hbond_geometry.tsv"):
+        if r["ligand"] != "MMMA" or not r["angle_D_H_O_deg"]:
+            continue
+        if 110 <= float(r["angle_D_H_O_deg"]) <= 180 and 2.0 <= float(r["d_H_O_A"]) <= 3.0:
+            n += 1
+    return n
+
+
+def offset_pair():
+    """静電損失を vdW がどれだけ埋めるか。(中央値の差での %, seed ごとの範囲)。
+
+    項ごとの中央値は加法的でないので、この 2 つは一致しない。図 1 の注記はその両方を出す。
+    """
+    import statistics as st
+    import sys
+    sys.path.insert(0, os.path.join(ROOT, "scripts"))
+    import make_ladder_table as ml
+
+    def terms(pre):
+        out = []
+        for s in ml.SEEDS:
+            r = ml.rank1(pre + s)
+            if r:
+                out.append((float(r["vdw"]), ml.W_EMREF * abs(float(r["elec"]))))
+        return out
+
+    wt, dn = terms("MMAREP_MMT_blind"), terms("MMAREP_MMT_D184N_blind")
+    med = 100 * (st.median(w[0] for w in wt) - st.median(d[0] for d in dn)) \
+              / (st.median(w[1] for w in wt) - st.median(d[1] for d in dn))
+    per = sorted(round(100 * (w[0] - d[0]) / (w[1] - d[1])) for w, d in zip(wt, dn))
+    return med, f"{per[0]}-{per[-1]}"
+
+
+def pvalue_exponent():
+    """本文の p 値の指数。F(1,32) = 24.55 なら p = 2.266e-05 なので -5。
+
+    2026-11-02: 文献番号を繰り下げるスクリプトの正規表現が `10⁻⁵` の `⁵` を引用番号と
+    誤認し、黙って `10⁻⁶` に書き換えた。上付き文字は引用番号だけとは限らないので、
+    本文から直接読み取って見張る。
+    """
+    import re
+    body = open(os.path.join(ROOT, "DRAFT_letter_v2.md"), encoding="utf-8").read()
+    m = re.search(r"p = 2\.26 × 10([⁻⁻])([⁰¹²³⁴⁵⁶⁷⁸⁹]+)", body)
+    if not m:
+        raise KeyError("本文に p = 2.26 × 10^-n が見つからない")
+    digits = {c: str(i) for i, c in enumerate("⁰¹²³⁴⁵⁶⁷⁸⁹")}
+    return "-" + "".join(digits[c] for c in m.group(2))
+
+
+def max48():
+    """compound 48/80 が全条件で示した重心移動の最大値（T9 の範囲列の上端）。"""
+    return max(float(r["centroid_shift_range_A"].split("-")[1])
+               for r in load("T9_D184_ladder.tsv") if r["ligand"] == "Compound4880")
+
+
+def s7max(lig, rec):
+    """Table S7（ポーズごとの Jaccard）の最大値を、表に書いてある文字列のまま返す。"""
+    v = [r["jaccard_vs_wt"] for r in load("S7_jaccard_per_pose.tsv")
+         if r["ligand"] == lig and r["receptor"] == rec]
+    if not v:
+        raise KeyError((lig, rec))
+    return max(v, key=float)
+
 def s6(lig):
     """Table S6（Asp184 への水素結合の幾何、20 ポーズ）の行を返す。"""
     rows=[r for r in load("S6_hbond_geometry.tsv") if r["ligand"]==lig]
@@ -101,6 +167,8 @@ CHECKS_V2=[
  ("v2 MMA D184N score",           lambda: g9f("MMT","D184N","median_score"),           -19.457, 0.001),
  ("v2 MMA D184A Δscore %",        lambda: g9f("MMT","D184A","d_score_pct_of_WT"),        -5.1,  0.05),
  ("v2 MMA E164A Δscore (units)",  lambda: -g9f("MMT","E164A","d_score"),                  1.179, 0.005),
+ # 本文 ¶4 は 2026-11-01 に score 単位 (1.18) から % 表記 (+6.1%) に統一した
+ ("v2 MMA E164A Δscore %",        lambda: g9f("MMT","E164A","d_score_pct_of_WT"),          6.1,  0.05),
  # 2026-10-24 追加（事前登録 section 17）。yakuri3 の MMMA。
  ("v2 MMA WT score (yakuri3)",    lambda: g9f("MMT_y3","WT","median_score"),            -19.516, 0.001),
  ("v2 MMA D184E rot1 Δscore %",   lambda: g9f("MMT_y3","D184E_rot1","d_score_pct_of_WT"), -11.6, 0.05),
@@ -111,12 +179,49 @@ STR_CHECKS_V2=[
  ("v2 C48/80 D184N site kept",  lambda: g9("Compound4880","D184N","site_kept_of_20"), "20/20"),
  ("v2 MMA D184N site kept",     lambda: g9("MMT","D184N","site_kept_of_20"),          "20/20"),
  ("v2 MMA D184A site kept",     lambda: g9("MMT","D184A","site_kept_of_20"),          "16/20"),
- ("v2 MMA D184E rot1 site kept",lambda: g9("MMT_y3","D184E_rot1","site_kept_of_20"),   "0/20"),
- ("v2 MMA D184E rot2 site kept",lambda: g9("MMT_y3","D184E_rot2","site_kept_of_20"),   "3/20"),
+ ("v2 MMA D184E rot1 site kept",lambda: g9("MMT_y3","D184E_rot1","site_kept_of_20"),   "4/20"),
+ ("v2 MMA D184E rot2 site kept",lambda: g9("MMT_y3","D184E_rot2","site_kept_of_20"),  "16/20"),
  ("v2 MMA D184H rot1P site kept",lambda: g9("MMT","D184H_rot1P","site_kept_of_20"),    "0/20"),
  ("v2 MMA D184H rot1N site kept",lambda: g9("MMT","D184H_rot1N","site_kept_of_20"),    "0/20"),
- ("v2 MMA D184H rot2P site kept",lambda: g9("MMT","D184H_rot2P","site_kept_of_20"),    "0/20"),
+ ("v2 MMA D184H rot2P site kept",lambda: g9("MMT","D184H_rot2P","site_kept_of_20"),   "20/20"),
+ # 本文 ¶5「compound 48/80 は 20 ポーズ中 9〜13 で部位を保つ」の根拠（3 モデル）
+ ("v2 C48/80 D184H rot1P site kept",lambda: g9("Compound4880","D184H_rot1P","site_kept_of_20"),"13/20"),
+ ("v2 C48/80 D184H rot1N site kept",lambda: g9("Compound4880","D184H_rot1N","site_kept_of_20"), "9/20"),
+ ("v2 C48/80 D184H rot2P site kept",lambda: g9("Compound4880","D184H_rot2P","site_kept_of_20"),"12/20"),
+ # 本文 ¶5「3 モデル中 2 つは共有残基ゼロ、残り 1 つは 0.44-0.56」
+ ("v2 MMA D184H rot1P jaccard",  lambda: g9("MMT","D184H_rot1P","jaccard_vs_WT_range"), "0.000-0.000"),
+ ("v2 MMA D184H rot1N jaccard",  lambda: g9("MMT","D184H_rot1N","jaccard_vs_WT_range"), "0.000-0.000"),
+ ("v2 MMA D184H rot2P jaccard",  lambda: g9("MMT","D184H_rot2P","jaccard_vs_WT_range"), "0.625-0.750"),
+ # 本文 ¶4「E164A では 20 ポーズ中 13 でしか部位を保たない」
+ ("v2 MMA E164A site kept",      lambda: g9("MMT","E164A","site_kept_of_20"),           "20/20"),
+ # 本文 ¶5 の 0.556。2 桁だと 0.56 と出て閾値 0.56 と矛盾して見えるので S7 は 3 桁
+ ("v2 MMA D184H rot2P Jaccard max", lambda: s7max("MMT","D184H_rot2P"),                 "0.750"),
+ # 2026-11-02 追加。接触集合は変異で残基の形が変わると下がりうるので、
+ # 本文は「動いたかどうか」を受容体 Cα 重ね合わせ後の重心移動で述べる。
+ ("v2 MMA D184N 重心移動",        lambda: g9("MMT","D184N","centroid_shift_median_A"),      "0.98"),
+ ("v2 MMA D184N 重心移動の範囲",   lambda: g9("MMT","D184N","centroid_shift_range_A"),  "0.07-1.29"),
+ ("v2 MMA D184N 2A 以内",         lambda: g9("MMT","D184N","poses_within_2A_of_20"),       "20/20"),
+ ("v2 C48/80 D184N 重心移動",     lambda: g9("Compound4880","D184N","centroid_shift_median_A"), "0.68"),
+ ("v2 MMA D184H rot1P 重心移動",  lambda: g9("MMT","D184H_rot1P","centroid_shift_median_A"), "23.58"),
+ ("v2 MMA D184H rot1N 重心移動",  lambda: g9("MMT","D184H_rot1N","centroid_shift_median_A"), "23.72"),
+ ("v2 MMA D184H rot2P 重心移動",  lambda: g9("MMT","D184H_rot2P","centroid_shift_median_A"),  "3.10"),
+ ("v2 MMA D184E rot1 重心移動",   lambda: g9("MMT_y3","D184E_rot1","centroid_shift_median_A"),"13.04"),
+ ("v2 MMA D184E rot2 重心移動",   lambda: g9("MMT_y3","D184E_rot2","centroid_shift_median_A"), "2.19"),
+ ("v2 MMA D184A 重心移動",        lambda: g9("MMT","D184A","centroid_shift_median_A"),        "1.10"),
+ ("v2 MMA E164A 重心移動",        lambda: g9("MMT","E164A","centroid_shift_median_A"),        "1.83"),
+ # 本文 ¶5「48/80 はどの置換でも 2.6 A 以上は動かない」
+ ("v2 C48/80 重心移動の最大",     lambda: f"{max48():.2f}",                                   "2.52"),
+ # SI の「18/20 が弱い C-H...O の基準を満たす」。残り 2 つは角度が 110 度をわずかに下回る
+ ("S6 MMA 基準を満たすポーズ",    lambda: f"{s6_ok()}/20",                                   "18/20"),
+ # 図 1 注記の補償率。中央値の差で 87%、seed ごとだと 34-121% に散る
+ ("Fig1 vdW 補償（中央値の差）",  lambda: f"{offset_pair()[0]:.0f}",                            "87"),
+ ("Fig1 vdW 補償（seed ごと）",   lambda: offset_pair()[1],                                 "34-121"),
 ]
+# 原稿そのものを見る検査は、原稿が隣にあるときだけ走らせる。
+# 寄託アーカイブには scripts/ と data/ しか入らないので、そこでは黙って飛ばす。
+# 2025 年の論文の交互作用の p 値。F(1,32) = 24.55 -> p = 2.266e-05
+if os.path.exists(os.path.join(ROOT, "DRAFT_letter_v2.md")):
+    STR_CHECKS_V2.append(("¶1 の p 値の指数", pvalue_exponent, "-5"))
 STR_CHECKS=[
  ("MMA-only contact residues", lambda: g8("contacts_MMA_only"), "(none)"),
  ("shared contact residues",   lambda: g8("contacts_shared"),   "CYS168;PHE170;ASP184;TRP243;TRP248"),

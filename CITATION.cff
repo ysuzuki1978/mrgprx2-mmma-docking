@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: If you use this dataset, please cite it using these metadata.
 title: >-
-  Docking and D184 substitution data for: Two routes into one pocket — compound 48/80 engages MRGPRX2 through charge and monomethyl methacrylate through van der Waals contact
+  Docking and D184 substitution data for: Distinct interactions in one MRGPRX2 subpocket — compound 48/80 engages through charge and monomethyl methacrylate through van der Waals contact
 type: dataset
 authors:
   - family-names: Suzuki

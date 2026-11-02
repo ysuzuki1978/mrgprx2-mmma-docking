@@ -89,9 +89,61 @@ def load(path):
     return lig, prot
 
 
-def geom(run_prefix, ref_contacts=None):
-    """20 モデル分の「184 への最短距離」「WT 接触集合との Jaccard」を集める。"""
-    d184, jac, csets = [], [], []   # d184 は 48/80 では N、MMMA では重原子からの距離
+def contact_set(lig, prot, heavy_only=False):
+    """接触残基の集合。要素は **残基番号だけ**。
+
+    2026-11-02 修正。以前は (残基番号, 残基名) を要素にしていた。変異で残基名が
+    変わると、リガンドが 1 Å も動かなくても「接触を 1 つ失い 1 つ得た」扱いになり、
+    Jaccard が下がる。事前登録 (PREREG_TRIMER.md section 4) の定義は
+    「4.0 Å 以内の受容体**残基集合**」であり、想定していたのは同一受容体上の
+    2 ポーズの比較だった。残基名を鍵に入れたのは実装の副産物で、変異体に当てると
+    「動いた」と「名前が変わった」を取り違える。番号だけで比較するのが定義に忠実。
+
+    heavy_only は受容体側から水素を外した感度確認用（SI に併記する）。既定は
+    受容体の全原子で、Table S4 の注記および本スクリプトの従来の挙動と一致する。
+    """
+    P = [a for a in prot if a[3] != "H"] if heavy_only else prot
+    heavy = [a[4] for a in lig if a[3] != "H"]
+    return {a[0] for a in P
+            if min(math.dist(a[4], h) for h in heavy) <= CONTACT}
+
+
+def centroid(lig):
+    h = [a[4] for a in lig if a[3] != "H"]
+    return tuple(sum(c[i] for c in h) / len(h) for i in range(3))
+
+
+def ca_map(prot):
+    return {a[0]: a[4] for a in prot if a[2] == "CA"}
+
+
+def superpose(src_ca, dst_ca):
+    """共通の Cα で Kabsch 重ね合わせ。src の座標系を dst の座標系へ写す関数を返す。
+
+    HADDOCK は run ごとに別の座標系で書くので、リガンド座標を直接くらべてはいけない
+    （project CLAUDE.md）。受容体で合わせてからリガンドを測る。
+    """
+    import numpy as np
+    com = sorted(set(src_ca) & set(dst_ca))
+    P = np.array([src_ca[i] for i in com])
+    Q = np.array([dst_ca[i] for i in com])
+    cp, cq = P.mean(0), Q.mean(0)
+    U, _, Vt = np.linalg.svd((P - cp).T @ (Q - cq))
+    D = np.diag([1.0, 1.0, np.sign(np.linalg.det(Vt.T @ U.T))])
+    R = Vt.T @ D @ U.T
+    return lambda x: tuple((R @ (np.asarray(x) - cp)) + cq)
+
+
+def geom(run_prefix, ref=None):
+    """20 モデル分の幾何を集める。
+
+    ref は WT の (接触集合, 重原子のみの接触集合, Cα 辞書, リガンド重心)。
+    接触集合の Jaccard に加えて、**定義に依存しない**リガンド重心の移動量も返す。
+    接触集合は変異で残基の形そのものが変わるため、動いていないリガンドでも
+    値が下がりうる。移動量はその影響を受けない。
+    """
+    import numpy as np
+    d184, jac, jac_h, shift, csets = [], [], [], [], []
     for s in SEEDS:
         for m in models(run_prefix + s):
             lig, prot = load(m)
@@ -107,13 +159,24 @@ def geom(run_prefix, ref_contacts=None):
                     d184.append(min(math.dist(n, t) for n in ns for t in tgt))
                 else:           # 窒素を持たないリガンド（MMMA）は重原子で測る
                     d184.append(min(math.dist(h, t) for h in heavy for t in tgt))
-            # 接触残基集合
-            c = {(a[0], a[1]) for a in prot
-                 if min(math.dist(a[4], h) for h in heavy) <= CONTACT}
+            c = contact_set(lig, prot)
             csets.append(c)
-            if ref_contacts is not None:
-                jac.append(len(c & ref_contacts) / len(c | ref_contacts))
-    return d184, jac, csets
+            if ref is not None:
+                rc, rch, rca, rcen = ref
+                jac.append(len(c & rc) / len(c | rc))
+                ch = contact_set(lig, prot, heavy_only=True)
+                jac_h.append(len(ch & rch) / len(ch | rch))
+                f = superpose(ca_map(prot), rca)
+                shift.append(float(np.linalg.norm(
+                    np.array(f(centroid(lig))) - np.array(rcen))))
+    return d184, jac, jac_h, shift, csets
+
+
+def wt_reference(run_prefix):
+    """Jaccard と重心移動の基準（seed 917 の model 1）。"""
+    lig, prot = load(models(run_prefix)[0])
+    return (contact_set(lig, prot), contact_set(lig, prot, heavy_only=True),
+            ca_map(prot), centroid(lig))
 
 
 def f3(x):
@@ -123,12 +186,11 @@ def f3(x):
 def main():
     med = statistics.median
     rows, base = [], {}
-    # 各リガンドの WT 接触集合（seed 917 の model 1）を Jaccard の基準にする
+    # 各リガンドの WT 基準ポーズ（seed 917 の model 1）
     ref = {}
     for lig, lab, pre, _ in SETS:
         if lab == "WT":
-            _, _, cs = geom(pre)
-            ref[lig] = cs[0]
+            ref[lig] = wt_reference(pre)
 
     for lig, lab, pre, cpu in SETS:
         rs = [r for r in (rank1(pre + s) for s in SEEDS) if r]
@@ -140,7 +202,7 @@ def main():
         ds = [float(r["desolv"]) for r in rs]
         ec = [W_EMREF * abs(v) for v in el]          # 電荷の寄与（正の値）
         m_sc, m_ec, m_vd = med(sc), med(ec), med(vd)
-        d184, jac, _ = geom(pre, ref[lig])
+        d184, jac, jac_h, shift, _ = geom(pre, ref[lig])
         n_contact = sum(1 for d in d184 if d < CONTACT)
         if lab == "WT":
             base[lig] = (m_sc, m_ec)
@@ -159,8 +221,12 @@ def main():
             "" if pct_ec is None else f"{pct_ec:.1f}",
             f"{n_contact}/{len(d184)}" if d184 else "-",
             f"{min(d184):.2f}-{max(d184):.2f}" if d184 else "-",
-            f"{min(jac):.2f}-{max(jac):.2f}" if jac else "-",
+            f"{min(jac):.3f}-{max(jac):.3f}" if jac else "-",
             f"{sum(1 for v in jac if v >= SAME_SITE)}/{len(jac)}" if jac else "-",
+            f"{sum(1 for v in jac_h if v >= SAME_SITE)}/{len(jac_h)}" if jac_h else "-",
+            f"{med(shift):.2f}" if shift else "-",
+            f"{min(shift):.2f}-{max(shift):.2f}" if shift else "-",
+            f"{sum(1 for v in shift if v <= 2.0)}/{len(shift)}" if shift else "-",
             f"{max(sc)-min(sc):.3f}",
         ])
 
@@ -170,7 +236,9 @@ def main():
             "d_score", "d_elec_contribution",
             "d_score_pct_of_WT", "d_elec_contribution_pct_of_WT",
             "contacts_184_within_4A", "dist_184_range_A", "jaccard_vs_WT_range",
-            "site_kept_of_20",
+            "site_kept_of_20", "site_kept_of_20_receptor_heavy_only",
+            "centroid_shift_median_A", "centroid_shift_range_A",
+            "poses_within_2A_of_20",
             "score_range"]
     with open(OUT, "w") as f:
         f.write("\t".join(head) + "\n")

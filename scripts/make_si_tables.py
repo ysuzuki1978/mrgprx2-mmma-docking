@@ -114,9 +114,8 @@ def poses(pre):
 
 
 def contact_set(lig, prot):
-    heavy = [a[4] for a in lig if a[3] != "H"]
-    return {(a[0], a[1]) for a in prot
-            if min(math.dist(a[4], h) for h in heavy) <= CONTACT}
+    """接触残基の集合。make_ladder_table と同じ定義（残基番号のみ）を使う。"""
+    return ml.contact_set(lig, prot)
 
 
 # ---------------------------------------------------------------- S1
@@ -193,14 +192,17 @@ def s2():
 
 # ---------------------------------------------------------------- S4
 def s4():
-    freq = {}
+    freq, name = {}, {}
     for lab, pre in (("MMMA", "MMAREP_MMT_blind"), ("C4880", "Y3B")):
         for _, _, m in poses(pre):
             lig, prot = ml.load(m)
+            # 接触集合は残基番号だけなので、表示用の残基名は別に引く（S4 は野生型のみ）
+            name.update({a[0]: a[1] for a in prot})
             for key in contact_set(lig, prot):
                 freq.setdefault(key, {"MMMA": 0, "C4880": 0})[lab] += 1
     rows = []
-    for (ri, rn), d in sorted(freq.items()):
+    for ri, d in sorted(freq.items()):
+        rn = name[ri]
         if d["MMMA"] and d["C4880"]:
             cat = "both"
         elif d["C4880"]:
@@ -303,7 +305,9 @@ def s7():
             c = contact_set(l_, prot)
             j = len(c & ref[lig]) / len(c | ref[lig])
             rows.append([lig, rec, pre + ("" if seed == "917" else "_i" + seed), seed, model,
-                         len(c), f"{j:.2f}", "yes" if j >= SAME_SITE else "no"])
+                         # 閾値 0.56 と直接くらべる列なので 3 桁。2 桁だと 0.5556 が
+                         # 0.56 と表示され、same_site = no と矛盾して見える
+                         len(c), f"{j:.3f}", "yes" if j >= SAME_SITE else "no"])
     return write("S7_jaccard_per_pose.tsv",
                  ["ligand", "receptor", "run", "iniseed", "model",
                   "n_contact_residues", "jaccard_vs_wt", "same_site"],

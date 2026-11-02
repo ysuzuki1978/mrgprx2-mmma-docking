@@ -2,8 +2,8 @@
 
 Data, analysis code and Supplementary Tables for the Letter
 
-> **Two routes into one pocket: compound 48/80 engages MRGPRX2 through charge and
-> monomethyl methacrylate through van der Waals contact**
+> **Distinct interactions in one MRGPRX2 subpocket: compound 48/80 engages through charge
+> and monomethyl methacrylate through van der Waals contact**
 
 Each release of this repository is archived on Zenodo and gets its own DOI.
 **Cite the DOI of the version you used**, not this repository URL.
@@ -64,4 +64,6 @@ KAKENHI grant number 21K16549.
 
 ## Licence
 
-CC BY 4.0. See `LICENSE`.
+Data and documentation (`data/`, `cache/`, `protocol/`, this README): **CC BY 4.0**, see
+`LICENSE`. Analysis scripts (`scripts/`): **MIT**, see `LICENSE-CODE`. Creative Commons
+licences are not intended for software, which is why the two are separated.
