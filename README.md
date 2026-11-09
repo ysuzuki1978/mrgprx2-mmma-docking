@@ -37,7 +37,7 @@ python3 scripts/make_ladder_table.py       # T9 = Table S3
 python3 scripts/make_si_tables.py          # S1, S2, S4, S5, S7, S9
 python3 scripts/make_s6_hbond_geometry.py  # S6
 python3 scripts/make_s8_pose_rmsd.py       # S8   (needs NumPy)
-python3 scripts/verify.py                  # checks every quoted number (46 items)
+python3 scripts/verify.py                  # checks every quoted number (87 items)
 ```
 
 All nine tables are reproduced byte for byte, and `verify.py` exits non-zero if any
@@ -60,7 +60,7 @@ they are the files that produced the runs.
 ## Funding
 
 Japan Society for the Promotion of Science (JSPS), Grant-in-Aid for Scientific Research,
-KAKENHI grant number 21K16549.
+KAKENHI grant number 24K12211.
 
 ## Licence
 

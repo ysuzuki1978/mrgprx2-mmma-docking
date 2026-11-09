@@ -93,7 +93,7 @@ With Python 3 and NumPy, from the directory that contains data/ and scripts/:
   python3 scripts/make_s6_hbond_geometry.py # S6
   python3 scripts/make_s8_pose_rmsd.py      # S8  (needs NumPy)
   python3 scripts/verify.py                 # checks every quoted number against
-                                            # the tables (46 items)
+                                            # the tables (87 items)
 
 scripts/make_tables.py regenerates the earlier tables T1-T8. Those draw on runs
 from the first campaign that are not part of this deposit, so T1-T8 are included
